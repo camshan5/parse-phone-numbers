@@ -1,7 +1,9 @@
+import sys
+import unittest
 from flask.cli import FlaskGroup
 from project import app, db
 
-# created a new FlaskGroup instance to extend the normal
+# Created a new FlaskGroup instance to extend the normal
 # CLI with commands related to the Flask app.
 cli = FlaskGroup(app)
 
@@ -15,6 +17,16 @@ def recreate_db():
     db.drop_all()
     db.create_all()
     db.session.commit()
+
+
+@cli.command()
+def test():
+    """Discovers and runs the tests"""
+    tests = unittest.TestLoader().discover("project/tests", pattern="test*.py")
+    result = unittest.TextTestRunner(verbosity=2).run(tests)
+    if result.wasSuccessful():
+        return 0
+    sys.exit(result)
 
 
 if __name__ == "__main__":
