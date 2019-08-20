@@ -16,3 +16,11 @@ class User(db.Model):
     def __init__(self, username, phone_number):
         self.username = username
         self.phone_number = phone_number
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "phone_number": self.phone_number,
+            "active": self.active,
+        }

@@ -33,5 +33,14 @@ def test():
     sys.exit(result)
 
 
+@cli.command('seed_db')
+def seed_db():
+    """Populates the database with seed data."""
+    db.session.add(User(username='cshannon1989', phone_number="(832) 865-8698"))
+    db.session.add(User(username='fitzgerald', phone_number="(805) 444-4444"))
+    db.session.commit()
+
+
+
 if __name__ == "__main__":
     cli()
