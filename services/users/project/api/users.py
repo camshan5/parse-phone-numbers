@@ -1,12 +1,25 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, render_template
 from flask_restful import Resource, Api
 from sqlalchemy import exc
 
 from project import db
 from project.api.models import User
 
-users_blueprint = Blueprint("users", __name__)
+users_blueprint = Blueprint("users", __name__, template_folder="./templates")
 api = Api(users_blueprint)
+
+
+# our view
+@users_blueprint.route("/", methods=["GET", "POST"])
+def index():
+    if request.method == "POST":
+        username = request.form["username"]
+        phone_number = request.form["phone_number"]
+        db.session.add(User(username=username, phone_number=phone_number))
+        db.session.commit()
+    users = User.query.all()
+
+    return render_template("index.html", users=users)
 
 
 class UsersList(Resource):
@@ -44,7 +57,6 @@ class UsersList(Resource):
         return response_object, 200
 
 
-
 # similar to a Django detail view
 class Users(Resource):
     def get(self, user_id):
@@ -79,4 +91,3 @@ class UsersPing(Resource):
 api.add_resource(UsersList, "/users")
 api.add_resource(Users, "/users/<user_id>")
 api.add_resource(UsersPing, "/users/ping")
-

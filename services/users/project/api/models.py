@@ -1,15 +1,17 @@
+import re
+
 from sqlalchemy.sql import func
+from sqlalchemy import event
 
 from project import db
 
 
 class User(db.Model):
-
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(128), nullable=False)
-    phone_number = db.Column(db.String(255), nullable=False)
+    phone_number = db.Column(db.String(32), nullable=False)
     active = db.Column(db.Boolean(), default=True, nullable=False)
     created_date = db.Column(db.DateTime, default=func.now(), nullable=False)
 
@@ -24,3 +26,10 @@ class User(db.Model):
             "phone_number": self.phone_number,
             "active": self.active,
         }
+
+
+def validate_phone(target, value, old_value, initiator):
+    return re.sub(r"(?![0-9])", "", value)
+
+
+event.listen(User.phone_number)

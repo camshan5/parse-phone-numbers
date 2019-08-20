@@ -90,14 +90,14 @@ class TestUserService(BaseTestCase):
 
     def test_single_user(self):
         """Ensure get single user behaves correctly."""
-        user = add_user('cshannon1989', '(832) 865-8698')
+        user = add_user("cshannon1989", "(832) 865-8698")
         with self.client:
-            response = self.client.get(f'/users/{user.id}')
+            response = self.client.get(f"/users/{user.id}")
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 200)
-            self.assertIn('cshannon1989', data['data']['username'])
-            self.assertIn('(832) 865-8698', data['data']['phone_number'])
-            self.assertIn('success', data['status'])
+            self.assertIn("cshannon1989", data["data"]["username"])
+            self.assertIn("(832) 865-8698", data["data"]["phone_number"])
+            self.assertIn("success", data["status"])
 
     def test_single_user_no_id(self):
         """Ensure error is thrown if an id is not provided."""
@@ -119,20 +119,32 @@ class TestUserService(BaseTestCase):
 
     def test_all_users(self):
         """Ensure get all users behaves correctly."""
-        add_user('cshannon1989', '(832) 865-8698')
-        add_user('fitzgerald', '(805) 444-4444')
+        add_user("cshannon1989", "(832) 865-8698")
+        add_user("fitzgerald", "(805) 444-4444")
         with self.client:
-            response = self.client.get('/users')
+            response = self.client.get("/users")
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 200)
-            self.assertEqual(len(data['data']['users']), 2)
-            self.assertIn('cshannon1989', data['data']['users'][0]['username'])
-            self.assertIn(
-                '(832) 865-8698', data['data']['users'][0]['phone_number'])
-            self.assertIn('fitzgerald', data['data']['users'][1]['username'])
-            self.assertIn(
-                '(805) 444-4444', data['data']['users'][1]['phone_number'])
-            self.assertIn('success', data['status'])
+            self.assertEqual(len(data["data"]["users"]), 2)
+            self.assertIn("cshannon1989", data["data"]["users"][0]["username"])
+            self.assertIn("(832) 865-8698", data["data"]["users"][0]["phone_number"])
+            self.assertIn("fitzgerald", data["data"]["users"][1]["username"])
+            self.assertIn("(805) 444-4444", data["data"]["users"][1]["phone_number"])
+            self.assertIn("success", data["status"])
+
+    def test_main_add_user(self):
+        """Ensure a new user can be added to the database via a POST request"""
+        with self.client:
+            response = self.client.post(
+                "/",
+                data=dict(username="cshannon1989", phone_number="(832) 865-8698"),
+                follow_redirects=True,
+            )
+            self.assertEqual(response.status_code, 200)
+            self.assertIn(b"All Users", response.data)
+            self.assertNotIn(b"<p>No users!</p>", response.data)
+            self.assertIn(b"cshannon1989", response.data)
+
 
 if __name__ == "__main__":
     unittest.main()
