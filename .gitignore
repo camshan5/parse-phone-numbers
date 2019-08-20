@@ -1,0 +1,6 @@
+__pycache__
+.venv/
+htmlcov/
+jest_0/
+node_modules
+.DS_Store
