@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9dcfe5ba-aa23-4157-9ebe-6a7c392901a3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/users/project/api/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/services/users/project/api/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/users/project/tests/test_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/users/project/tests/test_users.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -148,6 +146,10 @@
       </serviceView>
     </option>
   </component>
+  <component name="StructureViewFactory">
+    <option name="AUTOSCROLL_MODE" value="false" />
+    <option name="AUTOSCROLL_FROM_SOURCE" value="true" />
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -159,7 +161,7 @@
       <option name="presentableId" value="Default" />
       <updated>1566331150409</updated>
       <workItem from="1566331153816" duration="21876000" />
-      <workItem from="1566365923302" duration="521000" />
+      <workItem from="1566365923302" duration="1602000" />
     </task>
     <servers />
   </component>
@@ -178,16 +180,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="jinja2-line">
-          <url>file://$PROJECT_DIR$/services/users/project/api/templates/index.html</url>
-          <line>32</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
