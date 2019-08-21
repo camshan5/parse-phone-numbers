@@ -132,19 +132,6 @@ class TestUserService(BaseTestCase):
             self.assertIn("(805) 444-4444", data["data"]["users"][1]["phone_number"])
             self.assertIn("success", data["status"])
 
-    def test_main_add_user(self):
-        """Ensure a new user can be added to the database via a POST request"""
-        with self.client:
-            response = self.client.post(
-                "/",
-                data=dict(username="cshannon1989", phone_number="(832) 865-8698"),
-                follow_redirects=True,
-            )
-            self.assertEqual(response.status_code, 200)
-            self.assertIn(b"All Users", response.data)
-            self.assertNotIn(b"<p>No users!</p>", response.data)
-            self.assertIn(b"cshannon1989", response.data)
-
 
 if __name__ == "__main__":
     unittest.main()

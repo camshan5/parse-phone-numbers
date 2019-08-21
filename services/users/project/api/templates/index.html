@@ -88,7 +88,7 @@
               {% if users %}
                 {% for user in users %}
               <div class="board-item">
-                <div class="board-item-content">
+                <div class="board-item-content"><small>{{ user.username }}:</small>
                   <span>{{ user.phone_number }}</span>
                 </div>
               </div>
