@@ -1,7 +1,4 @@
-import re
-
 from sqlalchemy.sql import func
-from sqlalchemy import event
 
 from project import db
 
@@ -26,10 +23,3 @@ class User(db.Model):
             "phone_number": self.phone_number,
             "active": self.active,
         }
-
-
-def validate_phone(target, value, old_value, initiator):
-    return re.sub(r"(?![0-9])", "", value)
-
-
-event.listen(User.phone_number)

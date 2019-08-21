@@ -1,12 +1,36 @@
+import re
 from flask import Blueprint, request, render_template
 from flask_restful import Resource, Api
 from sqlalchemy import exc
-
 from project import db
 from project.api.models import User
 
 users_blueprint = Blueprint("users", __name__, template_folder="./templates")
 api = Api(users_blueprint)
+
+
+def validate_phone(value):
+    numbers = re.findall(r"\(?\d{3}\)?-?.?\s?\d{3}\s?-?\s?.?\s?\d{4}", value)
+    numbers_list = list(numbers)
+
+    clean_list = []
+    for obj in numbers_list:
+        clean_list.append(re.sub(r"\(?\)?\.?-?", "", obj))
+
+    formatted_list = []
+    for obj in clean_list:
+        try:
+            int(obj)
+            area_code = obj[0:3]
+            line_prefix = obj[3:6]
+            line_number = obj[6:10]
+
+            formatted_list.append(f"({area_code}) {line_prefix}-{line_number}")
+
+        except ValueError:
+            continue
+
+    return formatted_list
 
 
 # our view
@@ -15,8 +39,11 @@ def index():
     if request.method == "POST":
         username = request.form["username"]
         phone_number = request.form["phone_number"]
-        db.session.add(User(username=username, phone_number=phone_number))
-        db.session.commit()
+        clean_phone_number = validate_phone(phone_number)
+
+        for obj in clean_phone_number:
+            db.session.add(User(username=username, phone_number=obj))
+            db.session.commit()
     users = User.query.all()
 
     return render_template("index.html", users=users)
@@ -54,6 +81,7 @@ class UsersList(Resource):
             "status": "success",
             "data": {"users": [user.to_json() for user in User.query.all()]},
         }
+
         return response_object, 200
 
 

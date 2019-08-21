@@ -1,52 +1,110 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Flask on Docker</title>
+  <head>
+    <meta charset="utf-8" />
+    <title>Parse Phone Numbers</title>
     <!-- meta -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="author" content="Cameron Shannon" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <!-- styles -->
-    <link href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css"
-          rel="stylesheet"
-    >
-    {% block css %}{% endblock %}
-</head>
-<body>
-<div class="container">
-    <div class="column is-one-third">
-        <br>
-        <h1 class="title">All Users</h1>
-        <hr>
-        <br>
-        <form action="/" method="POST">
-            <div class="field">
-                <input name="username" class="input" type="text"
-                       placeholder="Enter a username" required>
-            </div>
-            <div class="field">
-                <input name="phone_number" class="input"
-                       type="text" placeholder="Enter text with phone numbers here" required>
-            </div>
-            <input
-                    type="submit" class="button is-primary is-fullwidth"
-                    value="Submit">
-        </form>
-        <br>
-        <hr>
-        {% if users %}
-            <ol>
-                {% for user in users %}
-                    <li>{{ user.username }} | {{ user.phone_number }}</li>
-                {% endfor %}
-            </ol>
-        {% else %}
-            <p>No users!</p>
-        {% endif %}
-    </div>
-</div>
+    <link
+      href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css"
+      rel="stylesheet"
+    />
+    {% block css %}
+    <style>
+      .board-item {
+        margin: 5px 0;
+        will-change: transform;
+      }
 
-{% block js %}{% endblock %}
-</body>
+      .board-item-content {
+        word-break: break-all;
+        position: relative;
+        padding: 20px;
+        background: #fff;
+        border-radius: 4px;
+        font-size: 17px;
+        text-align: center;
+        cursor: pointer;
+        -webkit-box-shadow: 0px 1px 3px 0 rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 1px 3px 0 rgba(0, 0, 0, 0.2);
+        margin: 5px;
+      }
+      footer {
+        margin-top: 2rem;
+      }
+    </style>
+    {% endblock %}
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        <div class="column">
+          <article class="message is-link">
+            <div class="message-header">
+              <p>
+                Parse Phone Numbers:
+                <span
+                  ><i
+                    >A simple application to parse and format phone numbers from
+                    text</i
+                  ></span
+                >
+              </p>
+            </div>
+            <div class="message-body">
+              <form action="/" method="POST">
+                <div class="field">
+                  <label>
+                    <input
+                      name="username"
+                      class="input"
+                      type="text"
+                      placeholder="Enter a username"
+                      required
+                    />
+                  </label>
+                </div>
+                <div class="field">
+                  <div class="control">
+                    <label>
+                      <textarea
+                        name="phone_number"
+                        class="textarea"
+                        placeholder="Enter text with phone numbers"
+                        required
+                      ></textarea
+                    ></label>
+                  </div>
+                </div>
+                <input
+                  type="submit"
+                  class="button is-outlined"
+                  value="Submit"
+                />
+              </form>
+              <hr />
+              {% if users %}
+                {% for user in users %}
+              <div class="board-item">
+                <div class="board-item-content">
+                  <span>{{ user.phone_number }}</span>
+                </div>
+              </div>
+              {% else %}
+              <div class="board-item">
+                <div class="board-item-content">
+                  <span>No Data!</span>
+                </div>
+              </div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    {% block js %}{% endblock %}
+  </body>
 </html>
