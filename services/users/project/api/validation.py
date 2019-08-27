@@ -3,14 +3,18 @@ import re
 
 def validate_phone_numbers(value):
     phone_number_pattern = r"\(?\d{3}\)?-?.?\s?\d{3}\s?-?\s?.?\s?\d{4}"
+    extra_chars_pattern = r"\(?\)?\.?-?"
+
     compile_numbers = re.compile(phone_number_pattern)
+    compile_chars = re.compile(extra_chars_pattern)
+
     find_numbers = compile_numbers.findall(value)
 
     numbers_list = list(find_numbers)
 
     clean_list = []
     for obj in numbers_list:
-        clean_list.append(re.sub(r"\(?\)?\.?-?", "", obj))
+        clean_list.append(compile_chars.sub('', obj))
 
     formatted_list = []
     for obj in clean_list:

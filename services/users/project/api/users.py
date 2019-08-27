@@ -10,7 +10,6 @@ users_blueprint = Blueprint("users", __name__, template_folder="./templates")
 api = Api(users_blueprint)
 
 
-# our view
 @users_blueprint.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
@@ -21,6 +20,7 @@ def index():
         for obj in clean_phone_number:
             db.session.add(User(username=username, phone_number=obj))
             db.session.commit()
+
     users = User.query.all()
 
     return render_template("index.html", users=users)
@@ -37,6 +37,7 @@ class UsersList(Resource):
 
         username = post_data.get("username")
         phone_number = post_data.get("phone_number")
+
         try:
             user = User.query.filter_by(phone_number=phone_number).first()
             if not user:
@@ -62,7 +63,6 @@ class UsersList(Resource):
         return response_object, 200
 
 
-# similar to a Django detail view
 class Users(Resource):
     def get(self, user_id):
         """Get single user details"""

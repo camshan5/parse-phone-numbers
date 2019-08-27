@@ -6,6 +6,7 @@ services:
     build:
       context: ./services/users
       dockerfile: Dockerfile
+    restart: always  # Replaces the need for a startup script looking for db
     volumes:
       # Mount the code to the container
       - './services/users:/usr/src/app'
@@ -21,6 +22,7 @@ services:
       - users-db
 
   users-db:
+    restart: always
     build:
       context: ./services/users/project/db
       dockerfile: Dockerfile
