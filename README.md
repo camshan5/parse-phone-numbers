@@ -13,10 +13,10 @@ parsing, for example, a e-mail signature where you want to assign
 all associated numbers found with the user.
 
 Example Data:
->Cameron Shannon
->Email: cameroncshannon@gmail.com
->Cell: 832 865-8698
->Work: 805.490.7109
+>Cameron Shannon - 
+>Email: cameron.shannon@gmail.com - 
+>Cell: 832 845-8198 -
+>Work: 805.490.7239 -
 
 The above will return both phone numbers in the same format.
 
