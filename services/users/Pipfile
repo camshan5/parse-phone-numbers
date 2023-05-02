@@ -9,7 +9,7 @@ pytest = "5.1.1"
 
 [packages]
 psycopg2-binary = "==2.7.7"
-Flask = "==1.1.1"
+Flask = "==2.2.5"
 Flask-RESTful = "==0.3.7"
 Flask-SQLAlchemy = "==2.3.2"
 
